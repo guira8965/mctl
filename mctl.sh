@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # author: guira8965 (github)
-# PREREQUISITES: x11, openbox + picom, moonlight
+# PREREQUISITES: brightnessctl, x11, openbox + picom, screen, and moonlight 
 
 # ------------------------------------------------------------
 # DEFAULTS
