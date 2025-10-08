@@ -1,5 +1,6 @@
 # mctl 
-mctl is a simplified script based on [moonlight](https://github.com/moonlight-stream/moonlight-qt).
+mctl is a simplified script for [moonlight](https://github.com/moonlight-stream/moonlight-qt).
+
 ## Prerequisites
 - `brightnessctl`
 - `moonlight`
@@ -7,7 +8,7 @@ mctl is a simplified script based on [moonlight](https://github.com/moonlight-st
 - `sunshine`
 - `x11`
 
-## Progress
+## Features
 - [x] Basic functionality
 - [x] Brightness control
 - [ ] Volume control
