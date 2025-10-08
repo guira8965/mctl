@@ -16,15 +16,14 @@ moonlight(){
 screen(){
     local PROCESS_NAME="moonlight"
     local ARGUMENTS="-dmS"
-    
 }
 
 # ------------------------------------------------------------
 # MAIN FUNCTIONS
 # ------------------------------------------------------------
 start(){
-    $SCREEN $MOONLIGHT 
+    moonlight
+    screen 
 }
-stop(){
 
-}
+start
