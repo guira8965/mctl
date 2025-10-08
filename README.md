@@ -3,6 +3,7 @@
 - [x] Basic functionality
 - [x] Brightness control
 - [ ] Volume control
+- [ ] Create bat script for sunshine host to automate moonlight.
 - [ ] Graphical user interface for phone and windows for easy access
 
 ## Directory Tree
