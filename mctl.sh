@@ -5,6 +5,7 @@
 # ------------------------------------------------------------
 MOONLIGHT_PATH="/usr/bin/moonlight"
 SCREEN_PATH="/usr/bin/screen"
+DISPLAY_NUMBER="DISPLAY=:0"
 
 host="192.168.2.2"
 app="gui"
@@ -39,18 +40,18 @@ screen() {
 # Start moonlight with screen. It also turns ON the brightness.
 start(){
     local brightness="sudo brightnessctl set 100%"
-    local run="$(screen) $(moonlight)"
+    local run="$DISPLAY_NUMBER $(screen) $(moonlight)"
     $run
     $brightness
 }
 # Stop moonlight properly and forcefully. It also turns OFF the brightness.
 stop(){
     local brightness="sudo brightnessctl set 0%"
-    local disconnect="$MOONLIGHT_PATH quit $HOST"
+    local disconnect="$DISPLAY_NUMBER $MOONLIGHT_PATH quit $host"
     local kill="killall -9 moonlight"
-    $brightness
     $disconnect
     $kill
+    $brightness
 }
 # Prompts the user to choose between functions.
 prompt=$1
