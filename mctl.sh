@@ -1,36 +1,36 @@
 #!/bin/bash
 
 # ------------------------------------------------------------
-# PACKAGES
+# DEFAULTS
 # ------------------------------------------------------------
 MOONLIGHT_PATH="/usr/bin/moonlight"
 SCREEN_PATH="/usr/bin/screen"
 
-HOST="192.168.2.2"
-APP="gui"
+host="192.168.2.2"
+app="gui"
 
 # ------------------------------------------------------------
 # CONFIGURATION
 # ------------------------------------------------------------
 # MOONLIGHT CONFIG
 moonlight(){
-    local RESOLUTION="--resolution 1920x1080"
-    local FPS="--fps 60"
-    local BITRATE="--bitrate 200000" # KBps
-    local PACKET_SIZE="--packet-size 9000" # MTU
-    local DISPLAY_MODE="--display-mode borderless" # borderless/fullscreen/windowed
-    local VIDEO_ENCORDER="--video-decoder hardware" # auto/hardware/software
-    local VIDEO_CODEC="--video-codec auto" # AV1/H.264/HEVC/auto
-    local PERFORMANCE_OVERLAY="--performance-overlay" # --performance-overlay/--no-performance-overlay 
-    local OTHER_OPTIONS=""
-    local PARAMETERS="$RESOLUTION $FPS $BITRATE $PACKET_SIZE $DISPLAY_MODE $VIDEO_ENCORDER $VIDEO_CODEC $PERFORMANCE_OVERLAY $OTHER_OPTIONS"
-    echo "$MOONLIGHT_PATH stream $PARAMETERS $HOST $APP" # Usage: moonlight [options] stream <host> "<app>"
+    local resolution="--resolution 1366x768"
+    local fps="--fps 144"
+    local bitrate="--bitrate 100000" # KBps
+    local packet_size="--packet-size 9000" # MTU
+    local display_mode="--display-mode borderless" # borderless/fullscreen/windowed
+    local video_encoder="--video-decoder software" # auto/hardware/software
+    local video_codec="--video-codec auto" # AV1/H.264/HEVC/auto
+    local performance_overlay="--no-performance-overlay" # --performance-overlay/--no-performance-overlay 
+    local other_options="--no-vsync --no-frame-pacing --no-game-optimization" 
+    local parameters="$resolution $fps $bitrate $packet_size $display_mode $video_encoder $video_codec $performance_overlay $other_options"
+    echo "$MOONLIGHT_PATH stream $parameters $host $app" # Usage: moonlight [options] stream <host> "<app>"
 }
 # SCREEN CONFIG
 screen() {
-    PROCESS_NAME="moonlight"
-    ARGUMENTS="-DmS"
-    echo "$SCREEN_PATH $ARGUMENTS $PROCESS_NAME"
+    local process_name="moonlight"
+    local arguments="-dmS"
+    echo "$SCREEN_PATH $arguments $process_name"
 }
 
 # ------------------------------------------------------------
@@ -40,15 +40,28 @@ screen() {
 start(){
     local brightness="sudo brightnessctl set 100%"
     local run="$(screen) $(moonlight)"
-    $brightness
     $run
+    $brightness
 }
 # Stop moonlight properly and forcefully. It also turns OFF the brightness.
 stop(){
     local brightness="sudo brightnessctl set 0%"
-    local disconnect="moonlight quit $HOST"
+    local disconnect="$MOONLIGHT_PATH quit $HOST"
     local kill="killall -9 moonlight"
     $brightness
     $disconnect
     $kill
 }
+# Prompts the user to choose between functions.
+prompt=$1
+case $prompt in 
+    "start" | "START")
+        start
+        ;;
+    "stop" | "STOP")
+        stop
+        ;;
+    *)
+        echo "mctl <start|stop>"
+        ;;
+esac
