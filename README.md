@@ -1,4 +1,11 @@
 # mctl
+## Prerequisites
+- `brightnessctl`
+- `moonlight`
+- `openbox` + `picom`
+- `sunshine`
+- `x11`
+
 ## Progress
 - [x] Basic functionality
 - [x] Brightness control
