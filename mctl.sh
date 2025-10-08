@@ -23,7 +23,7 @@ moonlight(){
     local VIDEO_CODEC="--video-codec auto" # AV1/H.264/HEVC/auto
     local PERFORMANCE_OVERLAY="--performance-overlay" # --performance-overlay/--no-performance-overlay 
     local OTHER_OPTIONS=""
-    local PARAMETERS="$RESOLUTION $FPS $BITRATE $PACKET_SIZE $DISPLAY_MODE $VIDEO_ENCORDER $VIDEO_CODEC $OTHER_OPTIONS"
+    local PARAMETERS="$RESOLUTION $FPS $BITRATE $PACKET_SIZE $DISPLAY_MODE $VIDEO_ENCORDER $VIDEO_CODEC $PERFORMANCE_OVERLAY $OTHER_OPTIONS"
     echo "$MOONLIGHT_PATH stream $PARAMETERS $HOST $APP" # Usage: moonlight [options] stream <host> "<app>"
 }
 # SCREEN CONFIG
@@ -51,5 +51,3 @@ stop(){
     $disconnect
     $kill
 }
-start
-stop
