@@ -8,7 +8,7 @@
 ## Directory Tree
 ```bash
 home_folder/
-├── mctl.sh
+├── mctl.sh (used alias)
 └── .config/
     ├── openbox/
     │   └── autostart
