@@ -15,7 +15,7 @@ app="gui"
 # MOONLIGHT CONFIG
 moonlight(){
     local resolution="--resolution 1366x768"
-    local fps="--fps 144"
+    local fps="--fps 60"
     local bitrate="--bitrate 100000" # KBps
     local packet_size="--packet-size 9000" # MTU
     local display_mode="--display-mode borderless" # borderless/fullscreen/windowed
