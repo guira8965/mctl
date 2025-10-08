@@ -14,7 +14,7 @@ APP="gui"
 # ------------------------------------------------------------
 # MOONLIGHT CONFIG
 moonlight(){
-    local RESOLUTION="--resolution 1366x768"
+    local RESOLUTION="--resolution 1920x1080"
     local FPS="--fps 60"
     local BITRATE="--bitrate 200000" # KBps
     local PACKET_SIZE="--packet-size 9000" # MTU
@@ -36,13 +36,14 @@ screen() {
 # ------------------------------------------------------------
 # MAIN FUNCTIONS
 # ------------------------------------------------------------
-
+# Start moonlight with screen. It also turns ON the brightness.
 start(){
-    local brightness="sudo brightnessctl set 0%"
+    local brightness="sudo brightnessctl set 100%"
     local run="$(screen) $(moonlight)"
     $brightness
     $run
 }
+# Stop moonlight properly and forcefully. It also turns OFF the brightness.
 stop(){
     local brightness="sudo brightnessctl set 0%"
     local disconnect="moonlight quit $HOST"
