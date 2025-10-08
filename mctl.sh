@@ -43,17 +43,17 @@ screen() {
 start(){
     local brightness="sudo brightnessctl set 100%"
     local run="$(screen) $(moonlight)"
-    $run
     $brightness
+    $run
 }
 # Stop moonlight properly and forcefully. It also turns OFF the brightness.
 stop(){
     local brightness="sudo brightnessctl set 0%"
     local disconnect="$MOONLIGHT_PATH quit $host"
     local kill="killall -9 moonlight"
+    $brightness
     $disconnect
     $kill
-    $brightness
 }
 # Prompts the user to choose between functions.
 prompt=$1
