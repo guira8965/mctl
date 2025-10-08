@@ -3,13 +3,31 @@
 MOONLIGHT="/usr/bin/moonlight"
 SCREEN="/usr/bin/screen"
 
-# MOONLIGHT CONFIGURATION
-IP_ADDRESS="192.168.2.2"
-RESOLUTION="1366x768"
-BIRATE="600000" # KBps
+# ------------------------------------------------------------
+# CONFIGURATION
+# ------------------------------------------------------------
 
-start(){
+# MOONLIGHT CONFIG
+moonlight(){
+    local IP_ADDRESS="192.168.2.2"
+    local RESOLUTION="1366x768"
+    local BIRATE="600000" # KBps
+}
+
+# SCREEN CONFIG
+screen(){
+    local PROCESS_NAME="moonlight"
+    local ARGUMENTS="-dmS"
     
+}
+
+
+
+# ------------------------------------------------------------
+# MAIN FUNCTIONS
+# ------------------------------------------------------------
+start(){
+    $SCREEN $MOONLIGHT 
 }
 
 stop(){
