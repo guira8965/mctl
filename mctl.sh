@@ -1,4 +1,6 @@
 #!/bin/bash
+# author: guira8965 (github)
+# PREREQUISITES: x11, openbox + picom, moonlight
 
 # ------------------------------------------------------------
 # DEFAULTS
@@ -40,14 +42,14 @@ screen() {
 # Start moonlight with screen. It also turns ON the brightness.
 start(){
     local brightness="sudo brightnessctl set 100%"
-    local run="$DISPLAY_NUMBER $(screen) $(moonlight)"
+    local run="$(screen) $(moonlight)"
     $run
     $brightness
 }
 # Stop moonlight properly and forcefully. It also turns OFF the brightness.
 stop(){
     local brightness="sudo brightnessctl set 0%"
-    local disconnect="$DISPLAY_NUMBER $MOONLIGHT_PATH quit $host"
+    local disconnect="$MOONLIGHT_PATH quit $host"
     local kill="killall -9 moonlight"
     $disconnect
     $kill
@@ -57,9 +59,11 @@ stop(){
 prompt=$1
 case $prompt in 
     "start" | "START")
+        export $DISPLAY_NUMBER
         start
         ;;
     "stop" | "STOP")
+        export $DISPLAY_NUMBER
         stop
         ;;
     *)
