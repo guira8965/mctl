@@ -7,23 +7,27 @@ SCREEN="/usr/bin/screen"
 # CONFIGURATION
 # ------------------------------------------------------------
 # MOONLIGHT CONFIG
-moonlight(){
+moonlight (){
     local IP_ADDRESS="192.168.2.2"
     local RESOLUTION="1366x768"
-    local BIRATE="600000" # KBps
+    local BITRATE="600000" # KBps
+    echo $MOONLIGHT $IP_ADDRESS $RESOLUTION $BITRATE 
 }
+
 # SCREEN CONFIG
-screen(){
-    local PROCESS_NAME="moonlight"
-    local ARGUMENTS="-dmS"
+screen () {
+    PROCESS_NAME="moonlight"
+    ARGUMENTS="-dmS"
+    echo $ARGUMENTS $PROCESS_NAME  
 }
 
 # ------------------------------------------------------------
 # MAIN FUNCTIONS
 # ------------------------------------------------------------
+
 start(){
-    moonlight
-    screen 
+    local run=$(moonlight) $(screen)
+    run
 }
 
 start
