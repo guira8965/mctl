@@ -18,8 +18,8 @@ moonlight(){
     local fps="--fps 60"
     local bitrate="--bitrate 100000" # KBps
     local packet_size="--packet-size 9000" # MTU
-    local display_mode="--display-mode borderless" # borderless/fullscreen/windowed
-    local video_encoder="--video-decoder software" # auto/hardware/software
+    local display_mode="--display-mode fullscreen" # borderless/fullscreen/windowed
+    local video_encoder="--video-decoder hardware" # auto/hardware/software
     local video_codec="--video-codec auto" # AV1/H.264/HEVC/auto
     local performance_overlay="--no-performance-overlay" # --performance-overlay/--no-performance-overlay 
     local other_options="--no-vsync --no-frame-pacing --no-game-optimization" 
