@@ -1,5 +1,5 @@
 # mctl
-
+```bash
 home_folder/
 ├── mctl.sh
 └── .config/
@@ -7,3 +7,4 @@ home_folder/
     │   └── autostart
     └── picom/
         └── picom.conf
+```
