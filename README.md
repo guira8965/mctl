@@ -1,4 +1,5 @@
-# mctl
+# mctl 
+mctl is a simplified script based on [moonlight](https://github.com/moonlight-stream/moonlight-qt).
 ## Prerequisites
 - `brightnessctl`
 - `moonlight`
