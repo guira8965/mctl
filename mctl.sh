@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # author: guira8965 (github)
-# PREREQUISITES: brightnessctl, x11, openbox + picom, screen, and moonlight 
+# PREREQUISITES: x11, openbox + picom, moonlight
 
 # ------------------------------------------------------------
 # DEFAULTS
@@ -16,7 +16,7 @@ app="gui"
 # CONFIGURATION
 # ------------------------------------------------------------
 # MOONLIGHT CONFIG
-moonlight(){
+exec_moonlight(){
     local resolution="--resolution 1366x768"
     local fps="--fps 60"
     local bitrate="--bitrate 100000" # KBps
@@ -25,12 +25,12 @@ moonlight(){
     local video_encoder="--video-decoder hardware" # auto/hardware/software
     local video_codec="--video-codec auto" # AV1/H.264/HEVC/auto
     local performance_overlay="--no-performance-overlay" # --performance-overlay/--no-performance-overlay 
-    local other_options="--no-vsync --no-frame-pacing --no-game-optimization" 
+    local other_options="--vsync --no-frame-pacing --no-game-optimization" 
     local parameters="$resolution $fps $bitrate $packet_size $display_mode $video_encoder $video_codec $performance_overlay $other_options"
     echo "$MOONLIGHT_PATH stream $parameters $host $app" # Usage: moonlight [options] stream <host> "<app>"
 }
 # SCREEN CONFIG
-screen() {
+exec_screen() {
     local process_name="moonlight"
     local arguments="-dmS"
     echo "$SCREEN_PATH $arguments $process_name"
@@ -42,7 +42,7 @@ screen() {
 # Start moonlight with screen. It also turns ON the brightness.
 start(){
     local brightness="sudo brightnessctl set 100%"
-    local run="$(screen) $(moonlight)"
+    local run="$(exec_screen) $(exec_moonlight)"
     $brightness
     $run
 }
@@ -55,16 +55,22 @@ stop(){
     $disconnect
     $kill
 }
+status(){
+    screen -ls
+}
 # Prompts the user to choose between functions.
 prompt=$1
 case $prompt in 
-    "start" | "START")
+    "start")
         export $DISPLAY_NUMBER
         start
         ;;
-    "stop" | "STOP")
+    "stop")
         export $DISPLAY_NUMBER
         stop
+        ;;
+    "status")
+        status
         ;;
     *)
         echo "mctl <start|stop>"
