@@ -19,6 +19,8 @@ mctl is a simplified script for [moonlight](https://github.com/moonlight-stream/
 ```bash
 home_folder/
 ├── mctl.sh (used alias)
+├── .bashrc
+├── .bash_profile
 └── .config/
     ├── openbox/
     │   └── autostart
