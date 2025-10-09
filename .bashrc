@@ -1,7 +1,3 @@
-#
-# ~/.bashrc
-#
-
 # make mctl callable
 alias mctl=~/mctl/mctl.sh
 
