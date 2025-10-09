@@ -2,7 +2,7 @@
 :: author: guira8965 (github)
 
 :: CHANGE THIS if you didn’t make a host alias in your SSH config:
-set "HOST=gui@192.168.2.1 -p 6969"
+set "HOST=user@host -p 6969"
 
 :: optional delay to ensure SSH starts cleanly
 setlocal enabledelayedexpansion
@@ -28,13 +28,13 @@ goto MENU
 :START
 echo.
 echo === Starting Moonlight on %HOST% ===
-ssh %HOST% "/home/gui/mctl/mctl.sh start"
+ssh %HOST% "~/mctl/mctl.sh start"
 pause
 goto MENU
 
 :STOP
 echo.
 echo === Stopping Moonlight on %HOST% ===
-ssh %HOST% "/home/gui/mctl/mctl.sh stop"
+ssh %HOST% "~/mctl/mctl.sh stop"
 pause
 goto MENU
