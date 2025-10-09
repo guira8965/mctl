@@ -16,13 +16,15 @@ echo =====================================
 echo.
 echo  [1] Start Moonlight
 echo  [2] Stop Moonlight
-echo  [3] Exit
+echo  [3] Status
+echo  [4] Exit
 echo.
 set /p choice="Select an option: "
 
 if "%choice%"=="1" goto START
 if "%choice%"=="2" goto STOP
-if "%choice%"=="3" exit
+if "%choice%"=="3" goto STATUS
+if "%choice%"=="4" exit
 goto MENU
 
 :START
@@ -36,5 +38,12 @@ goto MENU
 echo.
 echo === Stopping Moonlight on %HOST% ===
 ssh %HOST% "~/mctl/mctl.sh stop"
+pause
+goto MENU
+
+:STATUS
+echo.
+echo === Stopping Moonlight on %HOST% ===
+ssh %HOST% "~/mctl/mctl.sh status"
 pause
 goto MENU
