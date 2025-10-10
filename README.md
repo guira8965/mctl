@@ -11,17 +11,18 @@ mctl is a simplified script for [moonlight](https://github.com/moonlight-stream/
 ## Features
 - [x] Basic functionality
 - [x] Brightness control
+- [x] Create bat script for sunshine host to automate moonlight.
 - [ ] Volume control
-- [ ] Create bat script for sunshine host to automate moonlight.
 - [ ] Graphical user interface for phone and windows for easy access
-- [ ] Fetch environment variables
+- [ ] Fetch environment variables / Create config file
 
 ## Directory Tree
 ```bash
 home_folder/
-├── mctl.sh (used alias)
 ├── .bashrc
 ├── .bash_profile
+├── .xinitrc
+├── mctl.sh
 └── .config/
     ├── openbox/
     │   └── autostart
