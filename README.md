@@ -15,6 +15,7 @@ mctl is a simplified script for [moonlight](https://github.com/moonlight-stream/
 - [ ] Volume control
 - [ ] Graphical user interface for phone and windows for easy access
 - [ ] Fetch environment variables / Create config file
+- [ ] Migrate to C++
 
 ## Directory Tree
 ```bash
