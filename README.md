@@ -18,7 +18,7 @@ mctl is a simplified script for [moonlight](https://github.com/moonlight-stream/
 
 ## Directory Tree
 ```bash
-home_folder/
+~/
 ├── .bashrc
 ├── .bash_profile
 ├── .xinitrc
