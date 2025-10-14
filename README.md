@@ -3,9 +3,8 @@ mctl is a simplified script for [moonlight](https://github.com/moonlight-stream/
 
 ## Prerequisites
 - `brightnessctl`
-- `moonlight`
+- `moonlight` (and a sunshine host)
 - `openbox` + `picom`
-- `sunshine`
 - `x11`
 
 ## Features
