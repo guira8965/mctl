@@ -15,6 +15,7 @@ mctl is a simplified script for [moonlight](https://github.com/moonlight-stream/
 - [ ] Graphical user interface for phone and windows for easy access
 - [ ] Fetch environment variables / Create config file
 - [ ] Migrate to C++
+- [ ] [rip](https://github.com/ClassicOldSong/Apollo/wiki/How-to-start-multiple-instances-of-Apollo)
 
 ## Directory Tree
 ```bash
