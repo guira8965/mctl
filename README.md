@@ -1,9 +1,9 @@
 # mctl 
-mctl is a simplified script for [moonlight](https://github.com/moonlight-stream/moonlight-qt).
+mctl is just a personal project. it's a simplified script based on [apollo](https://github.com/ClassicOldSong/Apollo) just for my personal use case.
 
 ## Prerequisites
 - `brightnessctl`
-- `moonlight` (and a sunshine host)
+- `moonlight` (and a apollo host)
 - `openbox` + `picom`
 - `x11`
 
