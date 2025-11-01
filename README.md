@@ -25,7 +25,8 @@ mctl is just a personal project. it's a simplified script based on [apollo](http
 ├── .bashrc
 ├── .bash_profile
 ├── .xinitrc
-├── mctl.sh
+├── mctl.py
+├── config.yaml
 └── .config/
     ├── openbox/
     │   └── autostart
