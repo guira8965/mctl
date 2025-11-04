@@ -4,12 +4,10 @@ windows:
   usbip_host: "" # e.g. 192.168.0.1
   usbip_bus_id: # Use bus-id. e.g. `usbip list -r 192.168.0.1`
     - ""
-
 linux:
   MOONLIGHT_PATH: "/usr/bin/moonlight"
   SCREEN_PATH: "/usr/bin/screen"
   DISPLAY_NUMBER: "0" # Change if you want to specificy a display
-
 moonlight:
   moonlight_host: "" # e.g. 192.168.0.1
   moonlight_app: "" # App name
@@ -20,5 +18,7 @@ moonlight:
   display_mode: "" # borderless/fullscreen/windowed
   video_encoder: "" # auto/hardware/software
   video_codec: "" # AV1/H.264/HEVC/auto
-  performance_overlay: "" # --performance-overlay/--no-performance-overlay 
-  other_options: ""
+  performance_overlay: false
+  vsync: true
+  frame_pacing: true
+  game_optimization: true
