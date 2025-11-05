@@ -1,13 +1,13 @@
 windows:
   ssh_host: "" # e.g. user@192.168.0.1
-  ssh_port: "22" # Default: 22 
+  ssh_port: "" # Default: 22 
   usbip_host: "" # e.g. 192.168.0.1
   usbip_bus_id: # Use bus-id. e.g. `usbip list -r 192.168.0.1`
     - ""
 linux:
   MOONLIGHT_PATH: "/usr/bin/moonlight"
   SCREEN_PATH: "/usr/bin/screen"
-  DISPLAY_NUMBER: "0" # Change if you want to specificy a display
+  DISPLAY_NUMBER: "" # Change if you want to specificy a display
 moonlight:
   moonlight_host: "" # e.g. 192.168.0.1
   moonlight_app: "" # App name
