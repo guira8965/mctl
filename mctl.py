@@ -1,5 +1,6 @@
 import sys, subprocess
 from ruamel.yaml import YAML
+
 # author: guira8965 (github)
 
 # ------------------------------------------------------------
@@ -327,7 +328,7 @@ def menu():
 # ------------------------------------------------------------
 if __name__ == "__main__":
     try:
-        configure()
+        menu()
     except KeyboardInterrupt:
         clear()
         print("Exiting mctl.")
