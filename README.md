@@ -4,9 +4,7 @@ mctl is just a personal project. it's a simplified script based on [apollo](http
 ## Prerequisites
 - `brightnessctl`
 - `moonlight` (and a apollo host)
-- `openbox` + `picom`
-- `x11`
-- `usbip`
+- `usbip` (optional)
 
 ## TODO:
 - [x] Basic functionality
