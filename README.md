@@ -15,7 +15,7 @@ mctl is just a personal project. it's a simplified script based on [apollo](http
 - [x] Migrate to Python
 - [x] Fetch environment variables / Create config file
 - [x] USB/IP
-- [ ] Add config customization via terminal-based GUI
+- [x] Add config customization via terminal-based GUI
 - [ ] Volume control
 - [ ] Apply MVC architecture pattern to organize code
 - [ ] FUNCTION: Check for "missing prerequisites"
