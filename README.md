@@ -14,7 +14,7 @@ mctl is just a personal project. it's a simplified script based on [apollo](http
 - [x] Fetch environment variables / Create config file
 - [x] USB/IP
 - [x] Add config customization via terminal-based GUI
-- [ ] Apply MVC architecture pattern to organize code
+- [ ] Apply architecture pattern to organize code
 - [ ] FUNCTION: Check for "missing prerequisites"
 - [ ] WINDOWS ONLY: Allow multiple instances of moonlight via apollo ([reference](https://github.com/ClassicOldSong/Apollo/wiki/How-to-start-multiple-instances-of-Apollo))
 
