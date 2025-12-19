@@ -2,17 +2,21 @@ package commands;
 
 import services.MoonlightService;
 import services.UsbipService;
+import services.BrightnessCtlService;
 
 public class StartCommand {
     private final UsbipService usbipService;
     private final MoonlightService moonlightService;
+    private final BrightnessCtlService brightnessCtlService;
     
     public StartCommand(
         UsbipService usbipService,
-        MoonlightService moonlightService
+        MoonlightService moonlightService,
+        BrightnessCtlService brightnessCtlService
     ) {
         this.usbipService = usbipService;
         this.moonlightService = moonlightService;
+        this.brightnessCtlService = brightnessCtlService;
     }
 
     public void run(int state){
@@ -21,17 +25,18 @@ public class StartCommand {
                 usbipService.detachAll();
                 usbipService.attachAll();
                 moonlightService.startStreaming();
+                brightnessCtlService.on();
                 break;
             case 2:
                 moonlightService.startStreaming();
+                brightnessCtlService.on();
                 break;
             case 3:
                 usbipService.detachAll();
                 usbipService.attachAll();
                 break;
             default:
-                System.out.println("Invalid state: " + state);
-                break;
+                return;
         }
     }
 }

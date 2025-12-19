@@ -18,10 +18,11 @@ public class Main {
         SshService sshService = new SshService(sshConfig);
         UsbipService usbipService = new UsbipService(sshService, usbipConfig);
         MoonlightService moonlightService = new MoonlightService(sshService, moonlightConfig);
+        BrightnessCtlService brightnessctl = new BrightnessCtlService(sshService);
         
         // Commands
-        StartCommand startCommand = new StartCommand(usbipService, moonlightService);
-        StopCommand stopCommand = new StopCommand(usbipService, moonlightService);
+        StartCommand startCommand = new StartCommand(usbipService, moonlightService, brightnessctl);
+        StopCommand stopCommand = new StopCommand(usbipService, moonlightService, brightnessctl);
         
         // UI
         CliHelper cliHelper = new CliHelper();

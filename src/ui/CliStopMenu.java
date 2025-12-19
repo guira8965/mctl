@@ -17,7 +17,7 @@ public class CliStopMenu {
     public void run() {
         while (true) {
             cliHelper.clear();
-            System.out.println("--- mctl/stop ---");
+            System.out.println("<-- mctl/stop -->");
             System.out.println("[1] Stop All");
             System.out.println("[2] Stop Moonlight");
             System.out.println("[3] Stop USB/IP");
@@ -32,6 +32,7 @@ public class CliStopMenu {
                 case "2" -> {stopCommand.run(2);}
                 case "3" -> {stopCommand.run(3);}  
                 default -> {
+                    System.out.println("Invalid option. Try again.");
                     cliHelper.promptEnterKey();
                     continue;
                 }

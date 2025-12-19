@@ -38,7 +38,7 @@ public class CliConfigureMenu {
         boolean isVisible = true;
         while (isVisible) {
             cliHelper.clear();
-            System.out.println("--- mctl/configure ---");
+            System.out.println("<-- mctl/configure -->");
             System.out.println("[1] Configure SSH");
             System.out.println("[2] Configure Moonlight");
             System.out.println("[3] Configure USB/IP");
@@ -53,7 +53,10 @@ public class CliConfigureMenu {
                 case "1" -> configureSsh();
                 case "2" -> configureMoonlight();
                 case "3" -> configureUsbip();
-                default -> {break;}
+                default -> {
+                    System.out.println("Invalid option. Try again.");
+                    break;
+                }
             }
         }
     }
@@ -61,12 +64,14 @@ public class CliConfigureMenu {
     public void setupConfig(SshConfig sshConfig, MoonlightConfig moonlightConfig, UsbipConfig usbipConfig) {
         cliHelper.clear();
 
-        System.out.println("Welcome to your first setup!");
-
+        System.out.println("Welcome to MCTL! (o////o)");
+        System.out.println("It seems like your first time here,\nlet's set things up shall we?");
+        System.out.println("");
         cliHelper.promptEnterKey();
         cliHelper.clear();
 
-        System.out.println("Phase 1 - Configure SSH");
+        System.out.println("<<< [1/3] - Initial Setup (Configure SSH) >>>");
+        System.out.println("");
         System.out.print("Enter SSH User (e.g. user): ");
         sshConfig.setSshUser(scanner.next());
         System.out.print("Enter SSH Host (e.g. 192.168.0.1): ");
@@ -74,10 +79,13 @@ public class CliConfigureMenu {
         System.out.print("Enter SSH Port (e.g. 22): ");
         sshConfig.setSshPort(scanner.nextInt());
         scanner.nextLine(); 
+        System.out.println("");
+        cliHelper.promptEnterKey();
 
         cliHelper.clear();
 
-        System.out.println("Phase 2 - Configure Moonlight");
+        System.out.println("<<< [2/3] - Initial Setup (Configure Moonlight) >>>");
+        System.out.println("");
         System.out.print("Enter Linux Display Number (e.g. 0): ");
         moonlightConfig.setDisplayNumber(scanner.nextInt());
         scanner.nextLine(); 
@@ -116,11 +124,14 @@ public class CliConfigureMenu {
         scanner.nextLine(); 
         System.out.println("Allow Game Optimization? (true/false): ");
         moonlightConfig.setGameOptimization(scanner.nextBoolean());
-        scanner.nextLine(); 
+        scanner.nextLine();
+        System.out.println("");
+        cliHelper.promptEnterKey();
         
         cliHelper.clear();
 
-        System.out.println("Phase 3 - Configure USB/IP");
+        System.out.println("<<< [3/3] - Initial Setup (Configure USB/IP)>>>");
+        System.out.println("");
         System.out.print("Enter USB/IP Host (e.g. 192.168.2.2): ");
         usbipConfig.setHost(scanner.next());
         scanner.nextLine(); 
@@ -131,12 +142,64 @@ public class CliConfigureMenu {
         for (String port : ports) {
             usbipConfig.addPort(port);
         }
+        System.out.println("");
+        cliHelper.promptEnterKey();
+
+        cliHelper.clear();
+
+        System.out.println("<<< Setup Overview (1/3) >>>");
+        System.out.println("");
+        System.out.println("SSH User: " + sshConfig.getSshUser());
+        System.out.println("SSH Host: " + sshConfig.getSshHost());
+        System.out.println("SSH Port: " + sshConfig.getSshPort());
+        System.out.println("");
+
+        cliHelper.promptEnterKey();
+        cliHelper.clear();
+
+        System.out.println("<<< Setup Overview (2/3) >>>");
+        System.out.println("");
+        System.out.println("Display Number: " + moonlightConfig.getDisplayNumber());
+        System.out.println("Moonlight Path: " + moonlightConfig.getMoonlightPath());
+        System.out.println("Moonlight Host: " + moonlightConfig.getMoonlightHost());
+        System.out.println("Moonlight App: " + moonlightConfig.getMoonlightApp());
+        System.out.println("Resolution: " + moonlightConfig.getResolution());
+        System.out.println("FPS: " + moonlightConfig.getFps());
+        System.out.println("Bitrate: " + moonlightConfig.getBitrate());
+        System.out.println("Packet Size: " + moonlightConfig.getPacketSize());
+        System.out.println("Display Mode: " + moonlightConfig.getDisplayMode());
+        System.out.println("Video Encoder: " + moonlightConfig.getVideoEncoder());
+        System.out.println("Video Codec: " + moonlightConfig.getVideoCodec());
+        System.out.println("Performance Overlay: " + moonlightConfig.isPerformanceOverlay());
+        System.out.println("VSync: " + moonlightConfig.isVsync());
+        System.out.println("Frame Pacing: " + moonlightConfig.isFramePacing());
+        System.out.println("Game Optimization: " + moonlightConfig.isGameOptimization());
+        System.out.println("");
+
+        cliHelper.promptEnterKey();
+        cliHelper.clear();
+        
+        System.out.println("<<< Setup Overview (3/3) >>>");
+        System.out.println("");
+        System.out.println("USB/IP Host: " + usbipConfig.getHost());
+        System.out.println("USB/IP Bus ID/s: " + usbipConfig.getPorts());
+        System.out.println("");
+
+        cliHelper.promptEnterKey();
+        cliHelper.clear();
+
+        System.out.println("Enjoy using MCTL!");
+        System.out.println("author: guira8965 (github)");
+        System.out.println("");
+
+        cliHelper.promptEnterKey();
+        cliHelper.clear();
     }
     private void configureSsh() {
         boolean isVisible = true;
         while (isVisible) {
             cliHelper.clear();
-            System.out.println("--- mctl/configure/ssh ---");
+            System.out.println("<-- mctl/configure/ssh -->");
             System.out.println("[1] SSH User (" + sshConfig.getSshUser() + ")");
             System.out.println("[2] SSH Host (" + sshConfig.getSshHost() + ")");
             System.out.println("[3] SSH Port (" + sshConfig.getSshPort() + ")");
@@ -163,7 +226,10 @@ public class CliConfigureMenu {
                     sshConfig.setSshPort(scanner.nextInt());
                     saveConfig();
                 }
-                default -> {continue;}
+                default -> {
+                    System.out.println("Invalid option. Try again.");
+                    continue;
+                }
             }   
         }
     }
@@ -172,7 +238,7 @@ public class CliConfigureMenu {
         boolean isVisible = true;
         while (isVisible) {
             cliHelper.clear();
-            System.out.println("--- mctl/configure/moonlight ---");
+            System.out.println("<-- mctl/configure/moonlight -->");
             System.out.println("[1] Display Number (" + moonlightConfig.getDisplayNumber() + ")");
             System.out.println("[2] Moonlight Path (" + moonlightConfig.getMoonlightPath() + ")");
             System.out.println("[3] Moonlight Host (" + moonlightConfig.getMoonlightHost() + ")");
@@ -271,7 +337,10 @@ public class CliConfigureMenu {
                     moonlightConfig.setGameOptimization(!flag);
                     saveConfig();
                 }
-                default -> {continue;}
+                default -> {
+                    System.out.println("Invalid option. Try again.");      
+                    continue;
+                }
             }
         }
     }
@@ -280,7 +349,7 @@ public class CliConfigureMenu {
         boolean isVisible = true;
         while (isVisible) {
             cliHelper.clear();
-            System.out.println("--- mctl/configure/usbip ---");
+            System.out.println("<-- mctl/configure/usbip -->");
             System.out.println("[1] USB/IP Host (" + usbipConfig.getHost() + ")");
             System.out.println("[2] USB/IP Bus ID/s (" + usbipConfig.getPorts() + ")");
             System.out.println("[0] Exit");
@@ -307,6 +376,7 @@ public class CliConfigureMenu {
                     saveConfig();
                 }
                 default -> {
+                    System.out.println("Invalid option. Try again.");
                     cliHelper.promptEnterKey();
                     continue;
                 }

@@ -17,7 +17,7 @@ public class CliStartMenu {
     public void run() {
         while (true) {
             cliHelper.clear();
-            System.out.println("--- mctl/start ---");
+            System.out.println("<-- mctl/start -->");
             System.out.println("[1] Start All");
             System.out.println("[2] Start Moonlight");
             System.out.println("[3] Start USB/IP");
@@ -32,6 +32,7 @@ public class CliStartMenu {
                 case "2" -> {startCommand.run(2);}
                 case "3" -> {startCommand.run(3);}  
                 default -> {
+                    System.out.println("Invalid option. Try again.");
                     cliHelper.promptEnterKey();
                     continue;
                 }

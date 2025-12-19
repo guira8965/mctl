@@ -25,7 +25,7 @@ public class CliMainMenu {
     public void run() {
         while (true) {
             cliHelper.clear();
-            System.out.println("--- mctl ---");
+            System.out.println("<-- mctl -->");
             System.out.println("[1] Start");
             System.out.println("[2] Stop");
             System.out.println("[3] Configure");
