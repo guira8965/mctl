@@ -1,12 +1,15 @@
-package ui;
+package ui.cli.tasks;
+
+import ui.cli.*;
 
 import commands.*;
 
-public class CliStartMenu {
+
+public class StartCliMenu {
     private final CliHelper cliHelper;
     private final StartCommand startCommand;
 
-    public CliStartMenu(CliHelper cliHelper, StartCommand startCommand){
+    public StartCliMenu(CliHelper cliHelper, StartCommand startCommand){
         this.cliHelper = cliHelper;
         this.startCommand = startCommand;
     }

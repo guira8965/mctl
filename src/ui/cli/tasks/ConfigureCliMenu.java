@@ -1,9 +1,11 @@
-package ui;
+package ui.cli.tasks;
 
-import java.util.Scanner;
+import ui.cli.*;
 import config.*;
 
-public class CliConfigureMenu {
+import java.util.Scanner;
+
+public class ConfigureCliMenu {
     private final Scanner scanner = new Scanner(System.in);
 
     String configPath;
@@ -13,7 +15,7 @@ public class CliConfigureMenu {
     private MoonlightConfig moonlightConfig;
     private UsbipConfig usbipConfig;
 
-    public CliConfigureMenu (
+    public ConfigureCliMenu (
         String configPath,
         BuildConfig buildConfig,
         CliHelper cliHelper,
@@ -75,7 +77,7 @@ public class CliConfigureMenu {
             "Enter Resolution [default: 1280x720]",
             "Enter FPS [default: 60]",
             "Enter Bitrate (in KBps) [default: 10000]",
-            "Enter Packet Size (in MTU) (e.g. 1500)",
+            "Enter Packet Size (in MTU) [default: 1500]",
             "Enter Display Mode (borderless/fullscreen/windowed) [default: fullscreen]",
             "Enter Video Encoder (auto/hardware/software) [default: auto]",
             "Enter Video Codec (auto/AV1/H.264/HEVC) [default: auto]",

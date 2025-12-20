@@ -1,16 +1,18 @@
-package ui;
+package ui.cli.tasks;
 
-public class CliMainMenu {
+import ui.cli.CliHelper;
+
+public class MainCliMenu {
     private final CliHelper cliHelper;
-    private final CliStartMenu cliStartMenu;
-    private final CliStopMenu cliStopMenu;
-    private final CliConfigureMenu cliConfigureMenu;
+    private final StartCliMenu cliStartMenu;
+    private final StopCliMenu cliStopMenu;
+    private final ConfigureCliMenu cliConfigureMenu;
     
-    public CliMainMenu(
+    public MainCliMenu(
         CliHelper cliHelper,
-        CliStartMenu cliStartMenu,
-        CliStopMenu cliStopMenu,
-        CliConfigureMenu cliConfigureMenu
+        StartCliMenu cliStartMenu,
+        StopCliMenu cliStopMenu,
+        ConfigureCliMenu cliConfigureMenu
     ) {
         this.cliHelper = cliHelper;
         this.cliStartMenu = cliStartMenu;

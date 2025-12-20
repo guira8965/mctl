@@ -1,12 +1,13 @@
-package ui;
+package ui.cli.tasks;
 
+import ui.cli.*;
 import commands.*;
 
-public class CliStopMenu {
+public class StopCliMenu {
     private final CliHelper cliHelper;
     private final StopCommand stopCommand;
 
-    public CliStopMenu(CliHelper cliHelper, StopCommand stopCommand) {
+    public StopCliMenu(CliHelper cliHelper, StopCommand stopCommand) {
         this.cliHelper = cliHelper;
         this.stopCommand = stopCommand;
     }

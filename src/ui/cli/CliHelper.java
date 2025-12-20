@@ -1,4 +1,4 @@
-package ui;
+package ui.cli;
 
 import java.util.Scanner;
 import java.util.function.Consumer;
@@ -130,7 +130,9 @@ public class CliHelper {
             String input = scanner.nextLine().strip().toLowerCase();
 
             switch (input) {
-                case "", "y"-> {return false;}
+                case "", "y"-> {
+                    System.exit(0);
+                }
                 case "n"  -> {return true;}
                 default -> {System.out.println("Invalid input. Enter Y or N.");}
             }
