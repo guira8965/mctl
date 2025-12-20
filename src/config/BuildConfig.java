@@ -19,24 +19,15 @@ public class BuildConfig implements Serializable {
     public MoonlightConfig getMoonlightConfig() {
         return moonlightConfig;
     }
-    public void setMoonlightConfig(MoonlightConfig moonlightConfig) {
-        this.moonlightConfig = moonlightConfig;
-    }
 
     public SshConfig getSshConfig() {
         return sshConfig;
-    }
-    public void setSshConfig(SshConfig sshConfig) {
-        this.sshConfig = sshConfig;
     }
 
     public UsbipConfig getUsbipConfig() {
         return usbipConfig;
     }
-    public void setUsbipConfig(UsbipConfig usbipConfig) {
-        this.usbipConfig = usbipConfig;
-    }
-
+    
     // Helper method to check if any config is missing
     public boolean isAnyEmpty() {
         return moonlightConfig.isEmpty() || sshConfig.isEmpty() || usbipConfig.isEmpty();

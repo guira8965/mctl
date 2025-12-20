@@ -6,21 +6,24 @@ import config.*;
 public class CliConfigureMenu {
     private final Scanner scanner = new Scanner(System.in);
 
-    private final CliHelper cliHelper;
+    String configPath;
     private final BuildConfig buildConfig;
+    private final CliHelper cliHelper;
     private SshConfig sshConfig;
     private MoonlightConfig moonlightConfig;
     private UsbipConfig usbipConfig;
 
     public CliConfigureMenu (
-        CliHelper cliHelper,
+        String configPath,
         BuildConfig buildConfig,
+        CliHelper cliHelper,
         SshConfig sshConfig,
         MoonlightConfig moonlightConfig,
         UsbipConfig usbipConfig
     ) {
-        this.cliHelper = cliHelper;
+        this.configPath = configPath;
         this.buildConfig = buildConfig;
+        this.cliHelper = cliHelper;
         this.sshConfig = sshConfig;
         this.moonlightConfig = moonlightConfig;
         this.usbipConfig = usbipConfig;
@@ -28,7 +31,7 @@ public class CliConfigureMenu {
     
     private void saveConfig() {
         try {
-            SaveConfig.saveConfig(buildConfig, "config.dat");
+            SaveConfig.saveConfig(buildConfig, configPath);
         } catch (Exception e) {
             System.err.println("Failed to save config: " + e.getMessage());
         }
@@ -43,16 +46,12 @@ public class CliConfigureMenu {
             System.out.println("[2] Configure Moonlight");
             System.out.println("[3] Configure USB/IP");
             System.out.println("[0] Back");
-            System.out.print("Select an option: ");
 
-            String choice = String.valueOf(scanner.next().trim());
-            scanner.nextLine();
-
-            switch (choice) {
-                case "0" -> {isVisible = !isVisible;}
-                case "1" -> configureSsh();
-                case "2" -> configureMoonlight();
-                case "3" -> configureUsbip();
+            switch (cliHelper.promptIntInRange("Select an option", 0, 3)) {
+                case 0 -> {isVisible = !isVisible;}
+                case 1 -> configureSsh();
+                case 2 -> configureMoonlight();
+                case 3 -> configureUsbip();
                 default -> {
                     System.out.println("Invalid option. Try again.");
                     break;
@@ -61,104 +60,88 @@ public class CliConfigureMenu {
         }
     }
 
+    // All of the prompts, since they are a LOT.
+    private String[][] prompt = {
+        { // SSH
+            "Enter SSH User (e.g. user)",
+            "Enter SSH Host (e.g. 192.168.0.1)",
+            "Enter SSH Port [default: 22]"
+        },
+        { // Moonlight
+            "Enter Linux Display Number [default: 0]",
+            "Enter Moonlight Path [default: /usr/bin/moonlight]",
+            "Enter Moonlight Host (e.g. 192.168.0.1)",
+            "Enter Moonlight App [default: Desktop]",
+            "Enter Resolution [default: 1280x720]",
+            "Enter FPS [default: 60]",
+            "Enter Bitrate (in KBps) [default: 10000]",
+            "Enter Packet Size (in MTU) (e.g. 1500)",
+            "Enter Display Mode (borderless/fullscreen/windowed) [default: fullscreen]",
+            "Enter Video Encoder (auto/hardware/software) [default: auto]",
+            "Enter Video Codec (auto/AV1/H.264/HEVC) [default: auto]",
+            "Allow performance overlay? (true/false)",
+            "Allow VSync? (true/false)",
+            "Allow Frame Pacing? (true/false)",
+            "Allow Game Optimization? (true/false)"
+        },
+        { // USB/IP
+            "Enter USB/IP Host (e.g. 192.168.2.2)",
+            "Enter USB/IP Ports (e.g. 0-1, 0-2)"
+        }
+    };
+
     public void setupConfig(SshConfig sshConfig, MoonlightConfig moonlightConfig, UsbipConfig usbipConfig) {
         cliHelper.clear();
-
-        System.out.println("Welcome to MCTL! (o////o)");
-        System.out.println("It seems like your first time here,\nlet's set things up shall we?");
-        System.out.println("");
-        cliHelper.promptEnterKey();
-        cliHelper.clear();
-
-        System.out.println("<<< [1/3] - Initial Setup (Configure SSH) >>>");
-        System.out.println("");
-        System.out.print("Enter SSH User (e.g. user): ");
-        sshConfig.setSshUser(scanner.next());
-        System.out.print("Enter SSH Host (e.g. 192.168.0.1): ");
-        sshConfig.setSshHost(scanner.next());
-        System.out.print("Enter SSH Port (e.g. 22): ");
-        sshConfig.setSshPort(scanner.nextInt());
-        scanner.nextLine(); 
-        System.out.println("");
-        cliHelper.promptEnterKey();
-
-        cliHelper.clear();
-
-        System.out.println("<<< [2/3] - Initial Setup (Configure Moonlight) >>>");
-        System.out.println("");
-        System.out.print("Enter Linux Display Number (e.g. 0): ");
-        moonlightConfig.setDisplayNumber(scanner.nextInt());
-        scanner.nextLine(); 
-        System.out.print("Enter Moonlight Path (e.g. /usr/bin/moonlight): ");
-        moonlightConfig.setMoonlightPath(scanner.next());
-        System.out.print("Enter Moonlight Host (e.g. 192.168.0.1): ");
-        moonlightConfig.setMoonlightHost(scanner.next());
-        System.out.print("Enter Moonlight App (e.g. app): ");
-        moonlightConfig.setMoonlightApp(scanner.next());
-        System.out.print("Enter Resolution (e.g. 1920x1080): ");
-        moonlightConfig.setResolution(scanner.next());
-        System.out.print("Enter FPS (e.g. 60): ");
-        moonlightConfig.setFps(scanner.nextInt());
-        scanner.nextLine(); 
-        System.out.print("Enter Bitrate (e.g. 100000 [in KBps]): ");
-        moonlightConfig.setBitrate(scanner.nextInt());
-        scanner.nextLine(); 
-        System.out.print("Enter Packet Size (e.g. 1492 [in MTU]): ");
-        moonlightConfig.setPacketSize(scanner.nextInt());
-        scanner.nextLine(); 
-        System.out.print("Enter Display Mode (borderless/fullscreen/windowed): ");
-        moonlightConfig.setDisplayMode(scanner.next());
-        System.out.print("Enter Video Encoder (auto/hardware/software): ");
-        moonlightConfig.setVideoEncoder(scanner.next());
-        System.out.print("Enter Video Codec (auto/AV1/H.264/HEVC): ");
-        moonlightConfig.setVideoCodec(scanner.next());
-        scanner.nextLine(); 
-        System.out.println("Allow performance overlay? (true/false): ");
-        moonlightConfig.setPerformanceOverlay(scanner.nextBoolean());
-        scanner.nextLine(); 
-        System.out.println("Allow VSync? (true/false): ");
-        moonlightConfig.setVsync(scanner.nextBoolean());
-        scanner.nextLine(); 
-        System.out.println("Allow Frame Pacing? (true/false): ");
-        moonlightConfig.setFramePacing(scanner.nextBoolean());
-        scanner.nextLine(); 
-        System.out.println("Allow Game Optimization? (true/false): ");
-        moonlightConfig.setGameOptimization(scanner.nextBoolean());
-        scanner.nextLine();
-        System.out.println("");
-        cliHelper.promptEnterKey();
         
-        cliHelper.clear();
+        System.out.println("Welcome to MCTL! (o////o)");
+        System.out.println("It seems like your first time here,\nlet's set things up shall we?\n");
 
-        System.out.println("<<< [3/3] - Initial Setup (Configure USB/IP)>>>");
-        System.out.println("");
-        System.out.print("Enter USB/IP Host (e.g. 192.168.2.2): ");
-        usbipConfig.setHost(scanner.next());
-        scanner.nextLine(); 
-        System.out.print("Enter USB/IP Ports (e.g. 0-1, 0-2): ");
-        String portsInput = scanner.nextLine().trim();
-        String[] ports = portsInput.split("\\s*,\\s*");
-        usbipConfig.getPorts().clear();
-        for (String port : ports) {
-            usbipConfig.addPort(port);
-        }
-        System.out.println("");
-        cliHelper.promptEnterKey();
+        cliHelper.pauseAndClear();
 
-        cliHelper.clear();
+        System.out.println("<<< [1/3] - Initial Setup (Configure SSH) >>>\n");
+        sshConfig.setSshUser(cliHelper.promptString(prompt[0][0], null));
+        sshConfig.setSshHost(cliHelper.promptString(prompt[0][1], null));
+        sshConfig.setSshPort(cliHelper.promptInt(prompt[0][2], "22"));
+        System.out.println();
 
-        System.out.println("<<< Setup Overview (1/3) >>>");
-        System.out.println("");
+        cliHelper.pauseAndClear();
+
+        System.out.println("<<< [2/3] - Initial Setup (Configure Moonlight) >>>\n");
+        moonlightConfig.setDisplayNumber(cliHelper.promptInt(prompt[1][0], "0"));
+        moonlightConfig.setMoonlightPath(cliHelper.promptString(prompt[1][1], "/usr/bin/moonlight"));
+        moonlightConfig.setMoonlightHost(cliHelper.promptString(prompt[1][2], null));
+        moonlightConfig.setMoonlightApp(cliHelper.promptString(prompt[1][3], "Desktop"));
+        moonlightConfig.setResolution(cliHelper.promptString(prompt[1][4], "1280x720"));
+        moonlightConfig.setFps(cliHelper.promptInt(prompt[1][5], "60"));
+        moonlightConfig.setBitrate(cliHelper.promptInt(prompt[1][6], "10000"));
+        moonlightConfig.setPacketSize(cliHelper.promptInt(prompt[1][7], "1500"));
+        moonlightConfig.setDisplayMode(cliHelper.promptString(prompt[1][8], "fullscreen"));
+        moonlightConfig.setVideoEncoder(cliHelper.promptString(prompt[1][9], "auto"));
+        moonlightConfig.setVideoCodec(cliHelper.promptString(prompt[1][10], "auto"));
+        moonlightConfig.setPerformanceOverlay(cliHelper.promptBool(prompt[1][11]));
+        moonlightConfig.setVsync(cliHelper.promptBool(prompt[1][12]));
+        moonlightConfig.setFramePacing(cliHelper.promptBool(prompt[1][13]));
+        moonlightConfig.setGameOptimization(cliHelper.promptBool(prompt[1][14]));
+        System.out.println();
+
+        cliHelper.pauseAndClear();
+
+        System.out.println("<<< [3/3] - Initial Setup (Configure USB/IP)>>\n");
+        usbipConfig.setHost(cliHelper.promptString(prompt[2][0], null));
+        cliHelper.promptStringArray(prompt[2][1], usbipConfig.getPorts()::clear, usbipConfig::addPort);
+        System.out.println();
+        
+        cliHelper.pauseAndClear();
+
+        System.out.println("<<< Setup Overview (1/3) >>>\n");
         System.out.println("SSH User: " + sshConfig.getSshUser());
         System.out.println("SSH Host: " + sshConfig.getSshHost());
         System.out.println("SSH Port: " + sshConfig.getSshPort());
-        System.out.println("");
+        System.out.println();
 
-        cliHelper.promptEnterKey();
-        cliHelper.clear();
+        cliHelper.pauseAndClear();
 
-        System.out.println("<<< Setup Overview (2/3) >>>");
-        System.out.println("");
+        System.out.println("<<< Setup Overview (2/3) >>>\n");
         System.out.println("Display Number: " + moonlightConfig.getDisplayNumber());
         System.out.println("Moonlight Path: " + moonlightConfig.getMoonlightPath());
         System.out.println("Moonlight Host: " + moonlightConfig.getMoonlightHost());
@@ -174,27 +157,24 @@ public class CliConfigureMenu {
         System.out.println("VSync: " + moonlightConfig.isVsync());
         System.out.println("Frame Pacing: " + moonlightConfig.isFramePacing());
         System.out.println("Game Optimization: " + moonlightConfig.isGameOptimization());
-        System.out.println("");
+        System.out.println();
 
-        cliHelper.promptEnterKey();
-        cliHelper.clear();
+        cliHelper.pauseAndClear();
         
-        System.out.println("<<< Setup Overview (3/3) >>>");
-        System.out.println("");
+        System.out.println("<<< Setup Overview (3/3) >>>\n");
         System.out.println("USB/IP Host: " + usbipConfig.getHost());
         System.out.println("USB/IP Bus ID/s: " + usbipConfig.getPorts());
-        System.out.println("");
+        System.out.println();
 
-        cliHelper.promptEnterKey();
-        cliHelper.clear();
+        cliHelper.pauseAndClear();
 
         System.out.println("Enjoy using MCTL!");
-        System.out.println("author: guira8965 (github)");
-        System.out.println("");
+        System.out.println("Author: guira8965 (Github)");
+        System.out.println();
 
-        cliHelper.promptEnterKey();
-        cliHelper.clear();
+        cliHelper.pauseAndClear();
     }
+
     private void configureSsh() {
         boolean isVisible = true;
         while (isVisible) {
@@ -204,26 +184,19 @@ public class CliConfigureMenu {
             System.out.println("[2] SSH Host (" + sshConfig.getSshHost() + ")");
             System.out.println("[3] SSH Port (" + sshConfig.getSshPort() + ")");
             System.out.println("[0] Back");
-            System.out.print("Select an option: ");
 
-            String choice = String.valueOf(scanner.next().trim());
-            scanner.nextLine();
-
-            switch (choice) {
-                case "0" -> {isVisible = !isVisible;}
-                case "1" -> {
-                    System.out.print("Enter SSH User (e.g. user): ");
-                    sshConfig.setSshUser(scanner.next());
+            switch (cliHelper.promptIntInRange("Select an option: ", 0, 3)) {
+                case 0 -> {isVisible = !isVisible;}
+                case 1 -> {
+                    sshConfig.setSshUser(cliHelper.promptString(prompt[0][0], null));
                     saveConfig();
                 }
-                case "2" -> {
-                    System.out.print("Enter SSH Host (e.g. 192.168.0.1): ");
-                    sshConfig.setSshHost(scanner.next());
+                case 2 -> {
+                    sshConfig.setSshHost(cliHelper.promptString(prompt[0][1], null));
                     saveConfig();
                 }
-                case "3" -> {
-                    System.out.print("Enter SSH Port (e.g. 22): ");
-                    sshConfig.setSshPort(scanner.nextInt());
+                case 3 -> {
+                    sshConfig.setSshPort(cliHelper.promptInt(prompt[0][2], "22"));
                     saveConfig();
                 }
                 default -> {
@@ -263,58 +236,47 @@ public class CliConfigureMenu {
             switch (choice) {
                 case "0" -> {isVisible = !isVisible;}
                 case "1" -> {
-                    System.out.print("Enter Linux Display Number (e.g. 0): ");
-                    moonlightConfig.setDisplayNumber(scanner.nextInt());
+                    moonlightConfig.setDisplayNumber(cliHelper.promptInt(prompt[1][0], "0"));
                     saveConfig();
                 }
                 case "2" -> {
-                    System.out.print("Enter Moonlight Path (e.g. /usr/bin/moonlight): ");
-                    moonlightConfig.setMoonlightPath(scanner.next());
+                    moonlightConfig.setMoonlightPath(cliHelper.promptString(prompt[1][1], "/usr/bin/moonlight"));
                     saveConfig();
                 }
                 case "3" -> {
-                    System.out.print("Enter Moonlight Host (e.g. 192.168.0.1): ");
-                    moonlightConfig.setMoonlightHost(scanner.next());
+                    moonlightConfig.setMoonlightHost(cliHelper.promptString(prompt[1][2], null));
                     saveConfig();
                 }
                 case "4" -> {
-                    System.out.print("Enter Moonlight App (e.g. app): ");
-                    moonlightConfig.setMoonlightApp(scanner.next());
+                    moonlightConfig.setMoonlightApp(cliHelper.promptString(prompt[1][3], "Desktop"));
                     saveConfig();
                 }
                 case "5" -> {
-                    System.out.print("Enter Resolution (e.g. 1920x1080): ");
-                    moonlightConfig.setResolution(scanner.next());
+                    moonlightConfig.setResolution(cliHelper.promptString(prompt[1][4], "1280x720"));
                     saveConfig();
                 }
                 case "6" -> {
-                    System.out.print("Enter FPS (e.g. 60): ");
-                    moonlightConfig.setFps(scanner.nextInt());
+                    moonlightConfig.setFps(cliHelper.promptInt(prompt[1][5], "60"));
                     saveConfig();
                 }
                 case "7" -> {
-                    System.out.print("Enter Bitrate (e.g. 100000 [in KBps]): ");
-                    moonlightConfig.setBitrate(scanner.nextInt());
+                    moonlightConfig.setBitrate(cliHelper.promptInt(prompt[1][6], "10000"));
                     saveConfig();
                 }
                 case "8" -> {
-                    System.out.print("Enter Packet Size (e.g. 1492 [in MTU]): ");
-                    moonlightConfig.setPacketSize(scanner.nextInt());
+                    moonlightConfig.setPacketSize(cliHelper.promptInt(prompt[1][7], "1500"));
                     saveConfig();
                 }
                 case "9" -> {
-                    System.out.print("Enter Display Mode (borderless/fullscreen/windowed): ");
-                    moonlightConfig.setDisplayMode(scanner.next());
+                    moonlightConfig.setDisplayMode(cliHelper.promptString(prompt[1][8], "fullscreen"));
                     saveConfig();
                 }
                 case "10" -> {
-                    System.out.print("Enter Video Encoder (auto/hardware/software): ");
-                    moonlightConfig.setVideoEncoder(scanner.next());
+                    moonlightConfig.setVideoEncoder(cliHelper.promptString(prompt[1][9], "auto"));
                     saveConfig();
                 }
                 case "11" -> {
-                    System.out.print("Enter Video Codec (auto/AV1/H.264/HEVC): ");
-                    moonlightConfig.setVideoCodec(scanner.next());
+                    moonlightConfig.setVideoCodec(cliHelper.promptString(prompt[1][10], "auto"));
                     saveConfig();
                 }
                 case "12" -> {
@@ -361,23 +323,16 @@ public class CliConfigureMenu {
             switch (choice) {
                 case "0" -> {isVisible = !isVisible;}
                 case "1" -> {
-                    System.out.print("Enter USB/IP Host (e.g. 192.168.2.2): ");
-                    usbipConfig.setHost(scanner.next());
+                    usbipConfig.setHost(cliHelper.promptString(prompt[2][0], null));
                     saveConfig();
                 }
                 case "2" -> {
-                    System.out.print("Enter USB/IP Ports (e.g. 0-1, 0-2): ");
-                    String portsInput = scanner.nextLine().trim();
-                    String[] ports = portsInput.split("\\s*,\\s*");
-                    usbipConfig.getPorts().clear();
-                    for (String port : ports) {
-                        usbipConfig.addPort(port);
-                    }
+                    cliHelper.promptStringArray(prompt[2][1], usbipConfig.getPorts()::clear, usbipConfig::addPort);
                     saveConfig();
                 }
                 default -> {
                     System.out.println("Invalid option. Try again.");
-                    cliHelper.promptEnterKey();
+                    cliHelper.pause();
                     continue;
                 }
             }

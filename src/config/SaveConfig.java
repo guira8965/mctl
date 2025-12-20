@@ -8,6 +8,8 @@ public class SaveConfig {
         public static void saveConfig(BuildConfig config, String filePath) throws IOException {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filePath))) {
             out.writeObject(config);
+        } catch (Exception e) {
+            System.err.println("Failed to save config: " + e.getMessage());
         }
     }
 }

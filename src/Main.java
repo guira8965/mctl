@@ -7,7 +7,8 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        BuildConfig config = LoadConfig.loadOrDefault("config.dat");
+        String configPath = "config.dat";
+        BuildConfig config = LoadConfig.loadOrDefault(configPath);
 
         // Use loaded config objects
         SshConfig sshConfig = config.getSshConfig();
@@ -28,12 +29,12 @@ public class Main {
         CliHelper cliHelper = new CliHelper();
         CliStartMenu cliStartMenu = new CliStartMenu(cliHelper, startCommand);
         CliStopMenu cliStopMenu = new CliStopMenu(cliHelper, stopCommand);
-        CliConfigureMenu cliConfigureMenu = new CliConfigureMenu(cliHelper, config, sshConfig, moonlightConfig, usbipConfig);
+        CliConfigureMenu cliConfigureMenu = new CliConfigureMenu(configPath, config, cliHelper, sshConfig, moonlightConfig, usbipConfig);
 
         if (config.isAnyEmpty()) {
             cliConfigureMenu.setupConfig(config.getSshConfig(), config.getMoonlightConfig(), config.getUsbipConfig());
             try {
-                SaveConfig.saveConfig(config, "config.dat");
+                SaveConfig.saveConfig(config, configPath);
             } catch (IOException e) {
                 System.err.println("Failed to save config: " + e.getMessage());
             }

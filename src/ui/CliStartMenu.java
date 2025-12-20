@@ -1,11 +1,8 @@
 package ui;
 
-import java.util.Scanner;
 import commands.*;
 
 public class CliStartMenu {
-    private final Scanner scanner = new Scanner(System.in);
-
     private final CliHelper cliHelper;
     private final StartCommand startCommand;
 
@@ -22,18 +19,14 @@ public class CliStartMenu {
             System.out.println("[2] Start Moonlight");
             System.out.println("[3] Start USB/IP");
             System.out.println("[0] Back");
-            System.out.print("Select an option: ");
-
-            String choice = String.valueOf(scanner.next().trim());
             
-            switch (choice) {
-                case "0" -> {return;}
-                case "1" -> {startCommand.run(1);}
-                case "2" -> {startCommand.run(2);}
-                case "3" -> {startCommand.run(3);}  
+            switch (cliHelper.promptIntInRange("Select an option", 0, 3)) {
+                case 0 -> {return;}
+                case 1 -> {startCommand.run(1);}
+                case 2 -> {startCommand.run(2);}
+                case 3 -> {startCommand.run(3);}  
                 default -> {
-                    System.out.println("Invalid option. Try again.");
-                    cliHelper.promptEnterKey();
+                    cliHelper.notifyInvalidOption();
                     continue;
                 }
             }
