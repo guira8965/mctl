@@ -4,17 +4,6 @@
 - `brightnessctl` (optional)
 - `usbip` (optional)
 
-## TODO:
-- [x] Basic functionality
-- [x] Brightness control
-- [x] Create bat script for sunshine host to automate moonlight.
-- [x] Migrate to Python
-- [x] Fetch environment variables / Create config file
-- [x] USB/IP
-- [x] Add config customization via terminal-based GUI
-- [x] Apply architecture pattern to organize code
-- [x] Migrated to Java whilst at the architecture pattern stage
-
 ## Directory Tree
 ```bash
 ~/src/
