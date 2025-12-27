@@ -1,13 +1,24 @@
 import config.*;
 import services.*;
 import commands.*;
-import ui.*;
 
+import ui.cli.*;
+import ui.cli.tasks.*;
+
+import ui.tray.*;
+
+import ui.tray.tasks.AllTrayMenu;
+import ui.tray.tasks.MoonlightTrayMenu;
+import ui.tray.tasks.UsbipTrayMenu;
+
+import java.util.List;
 import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        BuildConfig config = LoadConfig.loadOrDefault("config.dat");
+        String configPath = "config.dat";
+        String imagePath = "icon.png";
+        BuildConfig config = LoadConfig.loadOrDefault(configPath);
 
         // Use loaded config objects
         SshConfig sshConfig = config.getSshConfig();
@@ -18,29 +29,50 @@ public class Main {
         SshService sshService = new SshService(sshConfig);
         UsbipService usbipService = new UsbipService(sshService, usbipConfig);
         MoonlightService moonlightService = new MoonlightService(sshService, moonlightConfig);
+        BrightnessCtlService brightnessctl = new BrightnessCtlService(sshService);
         
         // Commands
-        StartCommand startCommand = new StartCommand(usbipService, moonlightService);
-        StopCommand stopCommand = new StopCommand(usbipService, moonlightService);
+        StartCommand startCommand = new StartCommand(usbipService, moonlightService, brightnessctl);
+        StopCommand stopCommand = new StopCommand(usbipService, moonlightService, brightnessctl);
         
         // UI
         CliHelper cliHelper = new CliHelper();
-        CliStartMenu cliStartMenu = new CliStartMenu(cliHelper, startCommand);
-        CliStopMenu cliStopMenu = new CliStopMenu(cliHelper, stopCommand);
-        CliConfigureMenu cliConfigureMenu = new CliConfigureMenu(cliHelper, config, sshConfig, moonlightConfig, usbipConfig);
+        StartCliMenu cliStartMenu = new StartCliMenu(cliHelper, startCommand);
+        StopCliMenu cliStopMenu = new StopCliMenu(cliHelper, stopCommand);
+        ConfigureCliMenu cliConfigureMenu = new ConfigureCliMenu(configPath, config, cliHelper, sshConfig, moonlightConfig, usbipConfig);
 
         if (config.isAnyEmpty()) {
             cliConfigureMenu.setupConfig(config.getSshConfig(), config.getMoonlightConfig(), config.getUsbipConfig());
             try {
-                SaveConfig.saveConfig(config, "config.dat");
+                SaveConfig.saveConfig(config, configPath);
             } catch (IOException e) {
                 System.err.println("Failed to save config: " + e.getMessage());
             }
         }
 
         // Finally, point to main menu
-        CliMainMenu mainMenu = new CliMainMenu(cliHelper, cliStartMenu, cliStopMenu, cliConfigureMenu);
-        cliHelper.clear();
-        mainMenu.run();
+        MainCliMenu mainMenu = new MainCliMenu(cliHelper, cliStartMenu, cliStopMenu, cliConfigureMenu);
+
+        Thread tray = new Thread(() -> {
+            List<TrayTask> tasks = List.of(
+                new AllTrayMenu(startCommand, stopCommand),
+                new MoonlightTrayMenu(startCommand, stopCommand),
+                new UsbipTrayMenu(startCommand, stopCommand)
+            );
+
+            try {
+                new TrayApp(tasks).run(imagePath);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        Thread cli = new Thread(() -> {
+            cliHelper.clear();
+            mainMenu.run();
+        });
+
+        cli.start();
+        tray.start();
     }
 }

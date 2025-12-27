@@ -1,6 +1,4 @@
-# mctl 
-mctl is just a personal project. it's a simplified script based on [apollo](https://github.com/ClassicOldSong/Apollo) just for my personal use case.
-
+# mctl
 ## Prerequisites
 - `brightnessctl`
 - `moonlight` (and a apollo host)

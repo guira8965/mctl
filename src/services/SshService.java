@@ -31,6 +31,7 @@ public class SshService {
     private void executeSshCommand(List<String> command) {
         ProcessBuilder pb = new ProcessBuilder(command);
         pb.redirectErrorStream(true);
+        pb.inheritIO();
 
         try {
             Process process = pb.start();

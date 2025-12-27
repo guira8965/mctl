@@ -1,0 +1,38 @@
+package ui.cli.tasks;
+
+import ui.cli.*;
+
+import commands.*;
+
+
+public class StartCliMenu {
+    private final CliHelper cliHelper;
+    private final StartCommand startCommand;
+
+    public StartCliMenu(CliHelper cliHelper, StartCommand startCommand){
+        this.cliHelper = cliHelper;
+        this.startCommand = startCommand;
+    }
+    
+    public void run() {
+        while (true) {
+            cliHelper.clear();
+            System.out.println("<-- mctl/start -->");
+            System.out.println("[1] Start All");
+            System.out.println("[2] Start Moonlight");
+            System.out.println("[3] Start USB/IP");
+            System.out.println("[0] Back");
+            
+            switch (cliHelper.promptIntInRange("Select an option", 0, 3)) {
+                case 0 -> {return;}
+                case 1 -> {startCommand.run(1);}
+                case 2 -> {startCommand.run(2);}
+                case 3 -> {startCommand.run(3);}  
+                default -> {
+                    cliHelper.notifyInvalidOption();
+                    continue;
+                }
+            }
+        }
+    }
+}
