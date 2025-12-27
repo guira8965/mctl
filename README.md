@@ -1,7 +1,7 @@
 # mctl
 ## Prerequisites
-- `brightnessctl`
 - `moonlight` (and a apollo host)
+- `brightnessctl` (optional)
 - `usbip` (optional)
 
 ## TODO:
