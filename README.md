@@ -19,8 +19,7 @@
 
 ## Directory Tree
 ```bash
-~/
-src/
+~/src/
 ├── Main.java
 ├── commands/
 │   ├── StartCommand.java
@@ -38,9 +37,18 @@ src/
 │   ├── SshService.java
 │   └── UsbipService.java
 └── ui/
-    ├── CliConfigureMenu.java
-    ├── CliHelper.java
-    ├── CliMainMenu.java
-    ├── CliStartMenu.java
-    └── CliStopMenu.java
+    ├── cli/
+    │   └── tasks
+    │       ├── CliConfigureMenu.java
+    │       ├── CliHelper.java
+    │       ├── CliMainMenu.java
+    │       ├── CliStartMenu.java
+    │       └── CliStopMenu.java
+    └── tray/
+        ├── tasks/
+        │   ├── AllTrayMeny.java
+        │   ├── MoonlightTrayMeny.java
+        │   └── UsbipTrayMenu.java
+        ├── TrayApp.java
+        └── TrayTask.java
 ```
