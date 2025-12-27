@@ -13,7 +13,7 @@ public class BrightnessCtlService {
     public void off() {
         List<String> cmd = new ArrayList<>();
 
-        cmd.add("sudo brightnessctl set 0%");
+        cmd.add("brightnessctl set 0%");
         String buildCommand = String.join(" ", cmd);
         sshService.runSshCommand(buildCommand);
     }
@@ -21,7 +21,7 @@ public class BrightnessCtlService {
     public void on() {
         List<String> cmd = new ArrayList<>();
 
-        cmd.add("sudo brightnessctl set 100%");
+        cmd.add("brightnessctl set 100%");
         String buildCommand = String.join(" ", cmd);
         sshService.runSshCommand(buildCommand);
     }

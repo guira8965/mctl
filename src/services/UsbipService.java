@@ -19,7 +19,7 @@ public class UsbipService {
     private void attach(String b){
         try {
             // Bind on remote host
-            sshService.runSshCommand("sudo usbip bind -b " + b);
+            sshService.runSshCommand("usbip bind -b " + b);
 
             // Attach locally
             System.out.println("Attaching USB/IP bus " + b + " from " + usbipConfig.getHost() + "...");
@@ -41,7 +41,7 @@ public class UsbipService {
     private void detach(String b){
         try {
             // Unbind on remote host
-            sshService.runSshCommand("sudo usbip unbind -b " + b);
+            sshService.runSshCommand("usbip unbind -b " + b);
 
             // Detach locally
             ProcessBuilder pb = new ProcessBuilder("usbip", "detach", "-a");
