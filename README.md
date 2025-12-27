@@ -14,8 +14,6 @@
 - [x] Add config customization via terminal-based GUI
 - [x] Apply architecture pattern to organize code
 - [x] Migrated to Java whilst at the architecture pattern stage
-- [ ] FUNCTION: Check for "missing prerequisites"
-- [ ] WINDOWS ONLY: Allow multiple instances of moonlight via apollo ([reference](https://github.com/ClassicOldSong/Apollo/wiki/How-to-start-multiple-instances-of-Apollo))
 
 ## Directory Tree
 ```bash
