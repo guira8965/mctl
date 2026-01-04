@@ -18,6 +18,10 @@ public class MoonlightService {
         this.moonlightConfig = moonlightConfig;
     }
 
+    private void ssh(String command) {
+        sshService.runSshCommand(command, moonlightConfig.getSshUser(), moonlightConfig.getSshHost(), moonlightConfig.getSshPort());
+    }
+
     // Start Moonlight streaming on the remote host
     public void startStreaming(){
         List<String> cmd = new ArrayList<>();
@@ -47,7 +51,7 @@ public class MoonlightService {
         String buildCommand = String.join(" ", cmd);
 
         System.out.println("Starting Moonlight...");
-        sshService.runSshCommand(buildCommand);
+        ssh(buildCommand);
     }
     
     public void stopStreaming(){
@@ -62,6 +66,7 @@ public class MoonlightService {
         String buildCommand = String.join(" ", cmd);
 
         System.out.println("Stopping Moonlight...");
-        sshService.runSshCommand(buildCommand);
+        ssh(buildCommand);
+        ssh("killall moonlight");
     }
 }

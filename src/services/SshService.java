@@ -1,28 +1,32 @@
 package services;
 
-import config.SshConfig;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SshService {
     // SSH parameters
-    private SshConfig sshConfig;
+    String sshUser;
+    String sshHost;
+    int sshPort;
 
     public SshService(
-        SshConfig sshConfig
+        String sshUser,
+        String sshHost,
+        int sshPort
     ) {
-        this.sshConfig = sshConfig;
+        this.sshUser = sshUser;
+        this.sshHost = sshHost;
+        this.sshPort = sshPort;
     }
     
     // Builds SSH command by storing it within an arraylist.
-    private List<String> buildSshCommand(String command) {
+    private List<String> buildSshCommand(String command, String sshUser, String sshHost, int sshPort) {
         List<String> cmd = new ArrayList<>();
         cmd.add("ssh");
-        cmd.add(sshConfig.getSshUser() + "@" + sshConfig.getSshHost());
+        cmd.add(sshUser + "@" + sshHost);
         cmd.add("-p");
-        cmd.add((String.valueOf(sshConfig.getSshPort())));
+        cmd.add((String.valueOf(sshPort)));
         cmd.add(command);
         return cmd;
     }
@@ -58,8 +62,8 @@ public class SshService {
      * MAIN: Helper function for running remove SSH.
      * Combines buildSshCommand() and executeSshCommand()
      */
-    public void runSshCommand(String command) {
-        List<String> cmd = buildSshCommand(command);
+    public void runSshCommand(String command, String sshUser, String sshHost, int sshPort) {
+        List<String> cmd = buildSshCommand(command, sshUser, sshHost, sshPort);
         executeSshCommand(cmd);
     }
 }

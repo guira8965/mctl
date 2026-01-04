@@ -16,15 +16,19 @@ public class UsbipService {
         this.usbipConfig = usbipConfig;
     }
 
+    private void ssh(String command) {
+        sshService.runSshCommand(command, usbipConfig.getSshUser(), usbipConfig.getSshHost(), usbipConfig.getSshPort());
+    }
+
     private void attach(String b){
         try {
             // Bind on remote host
-            sshService.runSshCommand("usbip bind -b " + b);
+            ssh("usbip bind -b " + b);
 
             // Attach locally
-            System.out.println("Attaching USB/IP bus " + b + " from " + usbipConfig.getHost() + "...");
+            System.out.println("Attaching USB/IP bus " + b + " from " + usbipConfig.getUsbipHost() + "...");
             ProcessBuilder pb = new ProcessBuilder(
-                "usbip", "attach", "-r", usbipConfig.getHost(), "-b", b
+                "usbip", "attach", "-r", usbipConfig.getUsbipHost(), "-b", b
             );
             pb.inheritIO();
             Process process = pb.start();
@@ -41,7 +45,7 @@ public class UsbipService {
     private void detach(String b){
         try {
             // Unbind on remote host
-            sshService.runSshCommand("usbip unbind -b " + b);
+            ssh("usbip unbind -b " + b);
 
             // Detach locally
             ProcessBuilder pb = new ProcessBuilder("usbip", "detach", "-a");
@@ -58,13 +62,13 @@ public class UsbipService {
     }
 
     public void attachAll(){
-        for (String i : usbipConfig.getPorts()) {
+        for (String i : usbipConfig.getUsbipPorts()) {
             attach(i);
         }
     }
 
     public void detachAll(){
-        for (String i : usbipConfig.getPorts()) {
+        for (String i : usbipConfig.getUsbipPorts()) {
             detach(i);
         }
     }

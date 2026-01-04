@@ -5,3 +5,4 @@ MyApp.jar
 MyApp/*
 out/*
 runtime/
+instances.ps1

@@ -25,11 +25,11 @@ public class StartCommand {
                 usbipService.detachAll();
                 usbipService.attachAll();
                 moonlightService.startStreaming();
-                brightnessCtlService.on();
+                brightnessCtlService.set();
                 break;
             case 2:
                 moonlightService.startStreaming();
-                brightnessCtlService.on();
+                brightnessCtlService.set();
                 break;
             case 3:
                 usbipService.detachAll();

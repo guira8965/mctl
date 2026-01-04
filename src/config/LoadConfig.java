@@ -11,7 +11,7 @@ public class LoadConfig {
         File file = new File(filePath);
         if (!file.exists()) {
             // File doesn't exist → return new default config
-            return new BuildConfig(new MoonlightConfig(), new SshConfig(), new UsbipConfig());
+            return new BuildConfig(new BrightnessCtlConfig(), new MoonlightConfig(), new UsbipConfig());
         }
 
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
@@ -19,7 +19,7 @@ public class LoadConfig {
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Failed to load config, creating default: " + e.getMessage());
             e.printStackTrace();
-            return new BuildConfig(new MoonlightConfig(), new SshConfig(), new UsbipConfig());
+            return new BuildConfig(new BrightnessCtlConfig(), new MoonlightConfig(), new UsbipConfig());
         }
     }
 }

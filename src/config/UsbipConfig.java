@@ -8,30 +8,55 @@ public class UsbipConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private List<String> ports = new ArrayList<>();
-    private String host = "";
+    private String sshUser = "";
+    private String sshHost = "";
+    private int sshPort;
 
-    public String getHost() {
-        return host;
-    }
-    public void setHost(String host) {
-        this.host = host;
-    }
+    private List<String> usbipPorts = new ArrayList<>();
+    private String usbipHost = "";
 
-    public List<String> getPorts() {
-        return ports;
+    public String getSshUser() {
+        return sshUser;
     }
-
-    public void setPorts(List<String> ports) {
-        this.ports = ports;
+    public void setSshUser(String sshUser) {
+        this.sshUser = sshUser;
     }
 
-    public void addPort(String port) {
-        this.ports.add(port);
+    public String getSshHost() {
+        return sshHost;
+    }
+    public void setSshHost(String sshHost) {
+        this.sshHost = sshHost;
+    }
+
+    public int getSshPort() {
+        return sshPort;
+    }
+    public void setSshPort(int sshPort) {
+        this.sshPort = sshPort;
+    }
+
+    public String getUsbipHost() {
+        return usbipHost;
+    }
+    public void setUsbipHost(String usbipHost) {
+        this.usbipHost = usbipHost;
+    }
+
+    public List<String> getUsbipPorts() {
+        return usbipPorts;
+    }
+
+    public void setUsbipPorts(List<String> usbipPorts) {
+        this.usbipPorts = usbipPorts;
+    }
+
+    public void addUsbipPort(String port) {
+        this.usbipPorts.add(port);
     }
 
     public boolean isEmpty() {
-        return ports == null || ports.isEmpty() ||
-            host == null || host.isEmpty();
+        return usbipPorts == null || usbipPorts.isEmpty() ||
+            usbipHost == null || usbipHost.isEmpty();
     }
 }

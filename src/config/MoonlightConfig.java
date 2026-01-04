@@ -6,6 +6,10 @@ public class MoonlightConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private String sshUser = "";
+    private String sshHost = "";
+    private int sshPort;
+    
     private int displayNumber;
     private String moonlightPath = "";
     private String moonlightHost = "";
@@ -21,6 +25,27 @@ public class MoonlightConfig implements Serializable {
     private boolean vsync;
     private boolean framePacing;
     private boolean gameOptimization;
+
+    public String getSshUser() {
+        return sshUser;
+    }
+    public void setSshUser(String sshUser) {
+        this.sshUser = sshUser;
+    }
+
+    public String getSshHost() {
+        return sshHost;
+    }
+    public void setSshHost(String sshHost) {
+        this.sshHost = sshHost;
+    }
+
+    public int getSshPort() {
+        return sshPort;
+    }
+    public void setSshPort(int sshPort) {
+        this.sshPort = sshPort;
+    }
 
     // Getters and Setters
     public int getDisplayNumber() {

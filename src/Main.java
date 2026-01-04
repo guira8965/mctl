@@ -21,28 +21,29 @@ public class Main {
         BuildConfig config = LoadConfig.loadOrDefault(configPath);
 
         // Use loaded config objects
-        SshConfig sshConfig = config.getSshConfig();
         UsbipConfig usbipConfig = config.getUsbipConfig();
         MoonlightConfig moonlightConfig = config.getMoonlightConfig();
+        BrightnessCtlConfig brightnessCtlConfig = config.getBrightnessCtlConfig();
 
         // Services
-        SshService sshService = new SshService(sshConfig);
+        SshService sshService = new SshService(null, null, 0);
         UsbipService usbipService = new UsbipService(sshService, usbipConfig);
         MoonlightService moonlightService = new MoonlightService(sshService, moonlightConfig);
-        BrightnessCtlService brightnessctl = new BrightnessCtlService(sshService);
+        BrightnessCtlService brightnessctlService = new BrightnessCtlService(sshService, brightnessCtlConfig);
         
         // Commands
-        StartCommand startCommand = new StartCommand(usbipService, moonlightService, brightnessctl);
-        StopCommand stopCommand = new StopCommand(usbipService, moonlightService, brightnessctl);
+        StartCommand startCommand = new StartCommand(usbipService, moonlightService, brightnessctlService);
+        StopCommand stopCommand = new StopCommand(usbipService, moonlightService, brightnessctlService);
         
         // UI
         CliHelper cliHelper = new CliHelper();
+        SetupCliMenu setupCliMenu = new SetupCliMenu(configPath, cliHelper);
         StartCliMenu cliStartMenu = new StartCliMenu(cliHelper, startCommand);
         StopCliMenu cliStopMenu = new StopCliMenu(cliHelper, stopCommand);
-        ConfigureCliMenu cliConfigureMenu = new ConfigureCliMenu(configPath, config, cliHelper, sshConfig, moonlightConfig, usbipConfig);
+        ConfigureCliMenu cliConfigureMenu = new ConfigureCliMenu(configPath, config, cliHelper, moonlightConfig, usbipConfig, brightnessCtlConfig, brightnessctlService);
 
         if (config.isAnyEmpty()) {
-            cliConfigureMenu.setupConfig(config.getSshConfig(), config.getMoonlightConfig(), config.getUsbipConfig());
+            setupCliMenu.run(brightnessCtlConfig, moonlightConfig, usbipConfig);
             try {
                 SaveConfig.saveConfig(config, configPath);
             } catch (IOException e) {
@@ -73,6 +74,6 @@ public class Main {
         });
 
         cli.start();
-        tray.start();
+        // tray.start();
     }
 }

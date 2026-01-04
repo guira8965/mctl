@@ -2,13 +2,15 @@ package config;
 
 import java.io.Serializable;
 
-public class SshConfig implements Serializable {
+public class BrightnessCtlConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String sshUser = "";
     private String sshHost = "";
     private int sshPort;
+    
+    private int brightnessAmount;
 
     public String getSshUser() {
         return sshUser;
@@ -31,10 +33,11 @@ public class SshConfig implements Serializable {
         this.sshPort = sshPort;
     }
 
-    // Helper method to check if essential fields are empty
-    public boolean isEmpty() {
-        return (sshUser == null || sshUser.isEmpty()) ||
-            (sshHost == null || sshHost.isEmpty()) ||
-            sshPort == 0;
+    // Getters and Setters
+    public int getBrightnessAmount() {
+        return brightnessAmount;
+    }
+    public void setBrightnessAmount(int brightnessAmount) {
+        this.brightnessAmount = brightnessAmount;
     }
 }
